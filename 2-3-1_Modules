@@ -1,0 +1,13 @@
+module top_module (
+	input wirea,
+	input wire b,
+	output wire out
+);
+
+	mod_a u1 ( 
+		.in1(a),
+		.in2(b),
+		.out(out)
+	);
+	
+endmodule
