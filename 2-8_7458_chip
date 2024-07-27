@@ -1,0 +1,33 @@
+module top_module ( 
+     input wire p1a,
+     input wire p1b,
+     input wire p1c,
+     input wire p1d,
+     input wire p1e,
+     input wire p1f,
+     
+     input wire p2a,
+     input wire p2b,
+     input wire p2c,
+     input wire p2d,
+     
+     output wire p1y,
+     output wire p2y
+     );
+    
+    wire w1;
+    wire w2;
+    wire w3;
+    wire w4;
+
+    assign w1 = p2a & p2b;
+    assign w2 = p2c & p2d;
+
+    assign p2y = w1 | w2;
+
+    assign w3 = p1a & p1c & p1b;
+    assign w4 = p1f & p1e & p1d;
+
+    assign p1y = w3|w4;
+
+endmodule
