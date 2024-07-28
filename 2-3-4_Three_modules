@@ -1,0 +1,17 @@
+module top_module (
+    input wire clk, 
+    input wire d, 
+    output wire q
+    );
+    
+    wire n1;
+    wire n2;
+    
+    
+    my_dff m1 ( clk, d, n1);
+    
+    my_dff m2 ( clk, n1, n2);
+    
+    my_dff m3 ( clk, n2, q);
+
+endmodule
