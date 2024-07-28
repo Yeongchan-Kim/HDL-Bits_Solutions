@@ -1,0 +1,13 @@
+module top_module (
+    input wire [7:0] a,
+    input wire [7:0] b,
+    input wire [7:0] c,
+    input wire [7:0] d,
+    output wire [7:0] min);
+    
+    assign min = (a < b && a < c && a < d ) ? a:
+                  (b < a && b < c && b < d) ? b:
+                  (c < b && c < a && c < d) ? c:
+                  d;
+                  
+endmodule
