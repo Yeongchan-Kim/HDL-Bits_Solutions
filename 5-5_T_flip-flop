@@ -1,0 +1,23 @@
+module top_module ();
+    reg clk;
+    reg reset;
+    reg t;
+    wire q;
+    
+    tff t1 (
+        .clk(clk), .reset(reset), .t(t), .q(q));
+    
+    always
+        #5 clk = ~clk;
+    
+    initial begin
+        clk = 1'b0;
+        reset = 1'b0;
+        t = 1'b0;
+        
+        #10 reset = 1;
+        #10 reset = 0; t = 1;
+            
+    end
+
+endmodule
