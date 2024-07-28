@@ -1,0 +1,25 @@
+module top_module (
+    input wire clk,
+    input wire x,
+    output wire z
+	);
+    
+    reg d1;
+    reg d2;
+    reg d3;
+    
+    initial begin
+        d1 = 0;
+        d2 = 0;
+        d3 = 0;
+    end
+    
+    always @(posedge clk) begin
+        d1 = x ^ d1;
+        d2 = x & (~d2);
+        d3 = x | (~d3);
+    end
+    
+    assign z = ~(d1 | d2 | d3);
+    
+endmodule
