@@ -1,0 +1,25 @@
+module top_module( 
+    input wire [99:0] a, b,
+    input wire cin,
+    output wire [99:0] cout,
+    output wire [99:0] sum );
+    
+    reg [99:0] sum_reg;
+    reg [99:0] cout_wire;
+    
+    integer i;
+    
+    always @* begin
+        sum_reg[0] = a[0] ^ b[0] ^ cin;
+        cout_wire[0] = (a[0] & b[0]) | (a[0] & cin) | (cin & b[0]);
+        
+        for (i = 1; i < 100; i=i+1) begin
+            sum_reg[i] = a[i] ^ b[i] ^ cout_wire[i-1];
+            cout_wire[i] = (a[i] & b[i]) | (a[i] & cout_wire[i-1]) | (cout_wire[i-1] & b[i]);
+        end
+    end
+    
+    assign cout = cout_wire;
+    assign sum = sum_reg;
+
+endmodule
