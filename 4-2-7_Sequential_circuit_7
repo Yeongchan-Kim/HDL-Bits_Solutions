@@ -1,0 +1,11 @@
+module top_module (
+    input wire clk,
+    input wire a,
+    output reg q 
+	);
+    
+    initial q = 1'b1;
+    always @(posedge clk)
+        q = ~a;
+
+endmodule
