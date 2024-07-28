@@ -1,0 +1,29 @@
+module top_module(
+    input wire [31:0] a,
+    input wire [31:0] b,
+    output reg [31:0] sum
+);
+    reg cout0;
+    reg cout1;
+    
+    reg n;
+    
+    wire [15:0] s0;
+    wire [15:0] s1;
+    
+    wire [15:0] out;
+    
+    add16 a0 ( .a(a[31:16]), .b(b[31:16]), .cin(0), .sum(s0), .cout(cout0));
+    add16 a1 ( .a(a[31:16]), .b(b[31:16]), .cin(1), .sum(s1), .cout(cout1));
+    
+    add16 a2 ( .a(a[15:0]), .b(b[15:0]), .cin(0), .sum(sum[15:0]), .cout(n));
+    
+    always @ (*)
+        case(n)
+            1'b0 : out = s0;
+            1'b1 : out = s1;
+        endcase
+    
+    assign sum = {out, {sum[15:0]}};
+
+endmodule
