@@ -1,0 +1,13 @@
+module top_module (
+    input wire clk,
+    input wire [7:0] in,
+    output reg [7:0] pedge
+);
+    reg [7:0]a = 8'h0;
+    
+    always @(posedge clk) begin
+        pedge <= (~a)&in;
+        a <= in;
+    end
+        
+endmodule
