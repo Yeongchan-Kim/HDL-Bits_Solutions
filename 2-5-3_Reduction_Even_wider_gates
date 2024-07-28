@@ -1,5 +1,5 @@
 module top_module( 
-    input [99:0] in,
+    input wire [99:0] in,
     output wire out_and,
     output wire out_or,
     output wire out_xor 
