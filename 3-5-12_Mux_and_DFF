@@ -1,0 +1,20 @@
+module top_module (
+    input wire clk,
+    input wire w,
+    input wire R,
+    input wire E,
+    input wire L,
+    output reg Q
+	);
+    
+    wire n;
+    wire d;
+    
+    assign n = E? w: Q;
+    assign d = L? R: n;
+    
+    always @ (posedge clk) begin
+        Q = d;
+    end
+    
+endmodule
