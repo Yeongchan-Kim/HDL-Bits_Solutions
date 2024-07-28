@@ -1,0 +1,14 @@
+module top_module(
+    input wire [31:0] a,
+    input wire [31:0] b,
+    output reg [31:0] sum
+);
+    wire n;
+    reg cout;
+    
+    add16 a1 ( a[15:0], b[15:0], 0, sum[15:0], n);
+    add16 a2 ( a[31:16], b[31:16], n, sum[31:16], cout);
+    
+    assign sum [31:0] = {{sum[31:16]}, {sum[15:0]}};
+
+endmodule
