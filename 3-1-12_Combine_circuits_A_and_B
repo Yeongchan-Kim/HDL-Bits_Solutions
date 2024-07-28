@@ -1,0 +1,17 @@
+module top_module (
+    input wire x, 
+    input wire y, 
+    output wire z
+	);
+    wire z1;
+    wire z2;
+    wire z5;
+    wire z6;
+    
+    assign z1 = (x^y) & x;
+    assign z2 = ~ (x^y);
+    assign z5 = z1 | z2;
+    assign z6 = z1 & z2;
+    assign z = z5 ^ z6;
+    
+endmodule
