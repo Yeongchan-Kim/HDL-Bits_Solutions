@@ -1,0 +1,14 @@
+module top_module (
+    input wire d, 
+    input wire ena,
+    output reg q
+	);
+    
+    reg prevq;
+    
+    always @(*) begin
+        prevq=q;
+        q= (ena)? d:prevq;
+    end
+
+endmodule
