@@ -1,0 +1,67 @@
+module top_module(
+    input wire clk,
+    input wire reset,
+    input wire ena,
+    output reg pm,
+    output reg [7:0] hh,
+    output reg [7:0] mm,
+    output reg [7:0] ss
+);
+
+    // Reset and initial state
+    always @(posedge clk) begin
+        if (reset) begin
+            hh <= 8'h12;
+            mm <= 8'h0;
+            ss <= 8'd0;
+            pm <= 1'h0;
+        end
+        else begin
+            // Seconds counter
+            if (ena && (ss[3:0] < 4'h9))
+                ss[3:0] <= ss[3:0] + 1'h1;
+            else if (ena && (ss[7:4] == 4'h5) && (ss[3:0] == 4'h9)) begin
+                ss[3:0] <= 4'h0;
+                ss[7:4] <= 4'h0;
+            end
+            else if (ena && (ss[3:0] == 4'h9)) begin
+                ss[3:0] <= 4'h0;
+                ss[7:4] <= ss[7:4] + 4'h1;
+            end
+            
+            // Minutes counter
+            if (ena && (ss[7:4] == 4'h5) && (ss[3:0] == 4'h9) && (mm[7:4] == 4'h5) && (mm[3:0] == 4'h9)) begin
+                mm[3:0] <= 4'h0;
+                mm[7:4] <= 4'h0;
+            end
+            
+            else if (ena && (mm[3:0] == 4'h9 )&& (ss[7:4] == 4'h5) && (ss[3:0] == 4'h9)) begin
+                mm[7:4] <= mm[7:4] + 4'h1;
+                mm[3:0] <= 4'h0;
+            end
+            
+            else if (ena && (ss[7:4] == 4'h5) && (ss[3:0] == 4'h9))
+                mm[3:0] <= mm[3:0] + 1'h1;
+            
+            // Hours counter
+            if(ena && (ss[7:4] == 4'h5) && (ss[3:0] == 4'h9) && (mm[7:4] == 4'h5) && (mm[3:0] == 4'h9) && (hh[7:4] == 4'h1) && (hh[3:0] == 4'h2)) begin
+                hh[7:4] <= 4'h0;
+                hh[3:0] <= 4'h1;
+            end
+            
+            else if(ena && (ss[7:4] == 4'h5) && (ss[3:0] == 4'h9) && (mm[7:4] == 4'h5) && (mm[3:0] == 4'h9) && (hh[3:0] == 4'h9)) begin
+                hh[7:4] <= hh[7:4] + 4'h1;
+                hh[3:0] <= 4'h0;
+            end
+            else if(ena && (ss[7:4] == 4'h5) && (ss[3:0] == 4'h9) && (mm[7:4] == 4'h5) && (mm[3:0] == 4'h9))
+                hh[3:0] <= hh[3:0] + 4'h1;
+
+            // Toggle PM based on 12-hour cycle
+            if(ena && (ss[7:4] == 4'h5) && (ss[3:0] == 4'h9) && (mm[7:4] == 4'h5) && (mm[3:0] == 4'h9) && (hh[7:4] == 4'h1) && (hh[3:0] == 4'h1))
+                pm <= ~pm;
+            
+        end
+    end
+
+endmodule
+
